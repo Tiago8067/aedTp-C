@@ -7,15 +7,16 @@
 
 #define TAM 100
 
-// DECLARACAO DE FUNCOES
-// void menuListagens(referencia, totalReferencias);
-// void menuEstatisticas(referencia, totalReferencias);
-
 typedef struct autor
 {
     char nome_proprio[TAM];
     char apelido[TAM];
 } AUTOR;
+
+typedef struct chave
+{
+    char palavra_chave[TAM];
+} CHAVE;
 
 typedef struct referencia
 {
@@ -27,6 +28,8 @@ typedef struct referencia
     int num_paginas;
     char endereco_http[TAM];
     char palavra_chave[TAM];
+    //char (*palavra_chave)[TAM];
+    //CHAVE chave;
     int qtd_palavra_chave;
 } REFERENCIA;
 
@@ -112,24 +115,28 @@ void alterarReferencias(REFERENCIA referencia[], int totalReferencias)
             fflush(stdin);
             fgets(referencia[indice].nome_publicacao, TAM, stdin);
             getch();
+            system("cls");
             break;
         case 2:
             printf("\n\t Insere o Novo tipo da publicacao: ");
             fflush(stdin);
             fgets(referencia[indice].tipo_publicacao, TAM, stdin);
             getch();
+            system("cls");
             break;
         case 3:
             printf("\n\t Insere o Novo nome proprio do autor: ");
             fflush(stdin);
             scanf("%s", referencia[indice].autor->nome_proprio);
             getch();
+            system("cls");
             break;
         case 4:
             printf("\n\t Insere o Novo apelido do autor: ");
             fflush(stdin);
             scanf("%s", referencia[indice].autor->apelido);
             getch();
+            system("cls");
             break;
         case 5:
             do
@@ -138,20 +145,22 @@ void alterarReferencias(REFERENCIA referencia[], int totalReferencias)
                 fflush(stdin);
                 scanf("%i", &referencia[indice].ano_publicacao);
 
-                if (referencia[indice].ano_publicacao < 0)
+                if (referencia[indice].ano_publicacao < 0 || referencia[totalReferencias].ano_publicacao > 2022)
                 {
-                    printf("Ano da Publicacao inserido e Invalido\n");
+                    printf("\n\n\tAno da Publicacao inserido e Invalido\n");
                 }
 
-            } while (referencia[indice].ano_publicacao < 0);
+            } while (referencia[indice].ano_publicacao < 0 || referencia[totalReferencias].ano_publicacao > 2022);
 
             getch();
+            system("cls");
             break;
         case 6:
             printf("\n\t Insere o Novo local da publicacao: ");
             fflush(stdin);
             fgets(referencia[indice].local_publicacao, TAM, stdin);
             getch();
+            system("cls");
             break;
         case 7:
             do
@@ -162,27 +171,40 @@ void alterarReferencias(REFERENCIA referencia[], int totalReferencias)
 
                 if (referencia[indice].num_paginas < 0)
                 {
-                    printf("Numero de Paginas inserido e Invalido\n");
+                    printf("\n\n\tNumero de Paginas inserido e Invalido\n");
                 }
 
             } while (referencia[indice].num_paginas < 0);
 
             getch();
+            system("cls");
             break;
         case 8:
             printf("\n\t Insere o Novo endereco HTTP: ");
             fflush(stdin);
             scanf("%s", referencia[indice].endereco_http);
             getch();
+            system("cls");
             break;
         case 9:
-            printf("\n\t Insere a/outra Nova palavra-chave: ");
-            fflush(stdin);
-            scanf("%s", referencia[indice].palavra_chave);
+            printf("Quantas Novas palavras-chave deseja inserir: ");
+            scanf("%i", &referencia[totalReferencias].qtd_palavra_chave);
+
+            for (int i = 0; i < referencia[totalReferencias].qtd_palavra_chave; i++)
+            {
+                printf("Insere a/outra Nova palavra-chave: ");
+                fflush(stdin);
+                fgets(referencia[i].palavra_chave, TAM, stdin);
+            }
             getch();
+            system("cls");
             break;
         case 0:
             return;
+        default:
+            system("cls");
+            printf("\n\t Opcao invalida!!! Por favor insira uma das opcoes apresentadas!!\n\n");
+            break;
         }
     }
 }
@@ -192,71 +214,78 @@ int inserirReferencias(REFERENCIA referencia[], int totalReferencias)
 
     system("cls");
 
-    //printf("Insere o nome da publicacao: ");
-    //fflush(stdin);
-    //fgets(referencia[totalReferencias].nome_publicacao, TAM, stdin);
+    printf("Insere o nome da publicacao: ");
+    fflush(stdin);
+    fgets(referencia[totalReferencias].nome_publicacao, TAM, stdin);
 
-    //printf("Insere o tipo da publicacao: ");
-    //fflush(stdin);
-    //fgets(referencia[totalReferencias].tipo_publicacao, TAM, stdin);
+    printf("Insere o tipo da publicacao: ");
+    fflush(stdin);
+    fgets(referencia[totalReferencias].tipo_publicacao, TAM, stdin);
 
-    //printf("Insere o nome proprio do autor: ");
-    //fflush(stdin);
-    //scanf("%s", referencia[totalReferencias].autor->nome_proprio);
+    printf("Insere o nome proprio do autor: ");
+    fflush(stdin);
+    scanf("%s", referencia[totalReferencias].autor->nome_proprio);
 
-    /*     printf("Insere o apelido do autor: ");
-        fflush(stdin);
-        scanf("%s", referencia[totalReferencias].autor->apelido); */
+    printf("Insere o apelido do autor: ");
+    fflush(stdin);
+    scanf("%s", referencia[totalReferencias].autor->apelido);
 
-    /*do
+    do
     {
         printf("Insere o ano da publicacao: ");
         fflush(stdin);
         scanf("%i", &referencia[totalReferencias].ano_publicacao);
 
-        if (referencia[totalReferencias].ano_publicacao < 0)
+        if (referencia[totalReferencias].ano_publicacao < 0 || referencia[totalReferencias].ano_publicacao > 2022)
         {
             printf("Ano da Publicacao inserido e Invalido\n");
         }
-    } while (referencia[totalReferencias].ano_publicacao < 0);*/
+    } while (referencia[totalReferencias].ano_publicacao < 0 || referencia[totalReferencias].ano_publicacao > 2022);
 
-    //&& referencia[totalReferencias].ano_publicacao >2022
+    printf("Insere o local da publicacao: ");
+    fflush(stdin);
+    fgets(referencia[totalReferencias].local_publicacao, TAM, stdin);
 
-        //printf("Insere o local da publicacao: ");
-        //fflush(stdin);
-        //fgets(referencia[totalReferencias].local_publicacao, TAM, stdin);*/
-
-       /*do
-        {
-            printf("Insere o numero de paginas da publicacao: ");
-            fflush(stdin);
-            scanf("%i", &referencia[totalReferencias].num_paginas);
-
-            if (referencia[totalReferencias].num_paginas < 0)
-            {
-                printf("Numero de Paginas inserido e Invalido\n");
-            }
-
-        } while (referencia[totalReferencias].num_paginas < 0);*/
-
-        /*printf("Insere o endereco HTTP: ");
+    do
+    {
+        printf("Insere o numero de paginas da publicacao: ");
         fflush(stdin);
-        scanf("%s", referencia[totalReferencias].endereco_http);
+        scanf("%i", &referencia[totalReferencias].num_paginas);
 
+        if (referencia[totalReferencias].num_paginas < 0)
+        {
+            printf("Numero de Paginas inserido e Invalido\n");
+        }
+
+    } while (referencia[totalReferencias].num_paginas < 0);
+
+    printf("Insere o endereco HTTP: ");
+    fflush(stdin);
+    scanf("%s", referencia[totalReferencias].endereco_http);
+
+        /*for (int i = 0; i < totalReferencias; i++)
+        {
+            printf("Quantas palavras-chave deseja inserir: ");
+            scanf("%i", &referencia[i].qtd_palavra_chave);
+
+            for (int j = 0; j < referencia[i].qtd_palavra_chave; j++)
+            {
+                printf("Insere a/outra palavra-chave: ");
+                fflush(stdin);
+                //fgets(referencia[j].palavra_chave, TAM, stdin);
+                scanf("%s", referencia[j].chave.palavra_chave);
+            }
+        }*/
+
+    printf("Quantas palavras-chave deseja inserir: ");
+    scanf("%i", &referencia[totalReferencias].qtd_palavra_chave);
+
+    for (int i = 0; i < referencia[totalReferencias].qtd_palavra_chave; i++)
+    {
         printf("Insere a/outra palavra-chave: ");
         fflush(stdin);
-        scanf("%s", referencia[totalReferencias].palavra_chave);
-        // for para a qqtd de palavras-chave que quer isnerir. */
-
-        printf("Quantas palavras-chave deseja inserir: ");
-        scanf("%i", &referencia[totalReferencias].qtd_palavra_chave);
-
-        for (int i = 0; i < referencia[totalReferencias].qtd_palavra_chave; i++)
-        {
-            printf("Insere a/outra palavra-chave: ");
-            fflush(stdin);
-            scanf("%s", referencia[i].palavra_chave);
-        }
+        fgets(referencia[i].palavra_chave, TAM, stdin);
+    }
         
     return totalReferencias + 1;
 }
@@ -269,8 +298,6 @@ void mostrarReferencias(REFERENCIA referencia[], int totalReferencias)
     printf("\n############################################################\n");
     printf("\t\tReferencias Bibliograficas");
     printf("\n############################################################\n");
-
-    // printf("|Indice da Referencia|\t|Nome da Publicacao|\t|Tipo da Publicacao|\t|Nome proprio do Autor|\t|Apelido do Autor|\t|Ano da Publicacao|\t|Local da Publicacao|\t|Num de Paginas da Publicacao|\t|Endereco HTTP|\t|Palavra(s)-Chave|");
 
     for (int i = 0; i < totalReferencias; i++)
     {
@@ -285,18 +312,16 @@ void mostrarReferencias(REFERENCIA referencia[], int totalReferencias)
         printf("Endereco HTTP: %s\n", referencia[i].endereco_http);
         for (int j = 0; j < referencia[i].qtd_palavra_chave; j++)
         {
-            printf("Palavra(s)-Chave: %s\n", referencia[j].palavra_chave);
+            printf("Palavra(s)-Chave: %s", referencia[j].palavra_chave);
         }
-        //printf("Palavra(s)-Chave: %s\n", referencia[i].palavra_chave);
         printf("############################################################\n");
-        // printf("\n | %i | | %s | | %s | | %s | | %s | | %i | | %s | | %i | | %s | | %s |", i, referencia[i].nome_publicacao, referencia[i].tipo_publicacao, referencia[i].autor->nome_proprio, referencia[i].autor->apelido, referencia[i].ano_publicacao, referencia[i].local_publicacao, referencia[i].num_paginas, referencia[i].endereco_http, referencia[i].palavra_chave);
     }
 
     printf("\n------------------------------------------------------------\n");
     printf("Total de Referencias: %i\n", totalReferencias);
 }
 
-// FUNCOES DE LISTAR~
+// FUNCOES DE LISTAR
 //tambem ja retorna o total de autores sem repetidos para o menu de listagens
 int listarAutoresSemRepetidos(REFERENCIA referencia[], int totalReferencias, int opcao)
 {
@@ -336,7 +361,7 @@ int listarAutoresSemRepetidos(REFERENCIA referencia[], int totalReferencias, int
         for (int i = 0; i < total_autores_sem_ser_repetido; i++)
         {
             //MUDAR PRINTF
-            printf("Autor: %s\n", autores_sem_ser_repetido[i]);
+            printf("Autor: %s %s\n", autores_sem_ser_repetido[i], referencia[totalReferencias].autor->apelido);
         }
         return 0;
     }
@@ -344,12 +369,41 @@ int listarAutoresSemRepetidos(REFERENCIA referencia[], int totalReferencias, int
     return total_autores_sem_ser_repetido;
 }
 
-void listarPublicacoesAutor() {}
+void listarPublicacoesAutor(REFERENCIA referencia[], int totalReferencias) {
+    char compara_apelido_pub[TAM];
+    int contador = 0;
+
+    printf("Introduza o Apelido do autor de publicacoes a procurar: ");
+    fflush(stdin);
+    scanf("%s", compara_apelido_pub);
+
+    for (int i = 0; i < totalReferencias; i++)
+    {
+        if (strcmp(referencia[i].autor->apelido, compara_apelido_pub) == 0)
+        {
+            printf("\n\t############################################################\n");
+            printf("\tPublicacoes: %s do autor com Apelido: %s", referencia[i].nome_publicacao, referencia[i].autor->apelido);
+        }
+        else 
+        {
+            if (strcmp(referencia[i].autor->apelido, compara_apelido_pub) != 0)
+            {
+                contador++;
+            }
+        }
+    }
+
+    if (contador != 0)
+    {
+        printf("\n\tDados inseridos sao Invalidos\n");
+    }
+}
 
 void listarPublicacoesTipo(REFERENCIA referencia[], int totalReferencias) {
     char compara_tipo_pub[TAM];
+    int contador = 0;
 
-    printf("Introduza o tipo de publicacoes a procurar: ");
+    printf("Introduza o Tipo de publicacoes a procurar: ");
     fflush(stdin);
     fgets(compara_tipo_pub, TAM, stdin);
 
@@ -357,29 +411,80 @@ void listarPublicacoesTipo(REFERENCIA referencia[], int totalReferencias) {
     {
         if (strcmp(referencia[i].tipo_publicacao, compara_tipo_pub) == 0)
         {
-            printf("############################################################\n");
-            printf("tipo: %s", referencia[i].tipo_publicacao);
+            printf("\n\t############################################################\n");
+            printf("\tPublicacoes: %s com o Tipo: %s", referencia[i].nome_publicacao, referencia[i].tipo_publicacao);
         }
-        
+        else 
+        {
+            if (strcmp(referencia[i].tipo_publicacao, compara_tipo_pub) != 0)
+            {
+                contador++;
+            }
+        }
+    }
+
+    if (contador != 0)
+    {
+        printf("\n\tDados inseridos sao Invalidos\n");
     }
 }
 
-void listarPublicacoesPelaPalavraChave() {}
+void listarPublicacoesPelaPalavraChave(REFERENCIA referencia[], int totalReferencias) {
+    char compara_chave_pub[TAM];
+    int contador = 0;
+
+    printf("Introduza a Palavra-Chave de publicacoes a procurar: ");
+    fflush(stdin);
+    fgets(compara_chave_pub, TAM, stdin);
+
+    for (int i = 0; i < totalReferencias; i++)
+    {
+        if (strcmp(referencia[i].palavra_chave, compara_chave_pub) == 0)
+        {
+            printf("\n\t############################################################\n");
+            printf("\tPublicacoes: %s com a Palavra-Chave: %s", referencia[i].nome_publicacao, referencia[i].palavra_chave);
+        }
+        else 
+        {
+            if (strcmp(referencia[i].palavra_chave, compara_chave_pub) != 0)
+            {
+                contador++;
+            }
+        }
+    }
+
+    if (contador != 0)
+    {
+        printf("\n\tDados inseridos sao Invalidos\n");
+    }
+}
 
 void listarPublicacoesAno(REFERENCIA referencia[], int totalReferencias) {
     int compara_ano_pub = 0;
+    int contador = 0;
 
-    printf("Introduza o ano de publicacoes a procuarar: ");
+    printf("Introduza o Ano de publicacoes a procurar: ");
     scanf("%i", &compara_ano_pub);
 
     for (int i = 0; i < totalReferencias; i++)
     {
         if (referencia[i].ano_publicacao == compara_ano_pub)
         {
-            printf("############################################################\n");
-            printf("tipo: %i", referencia[i].ano_publicacao);
+            printf("\n\t############################################################\n");
+            printf("\tPublicacoes: %s do Ano: %i", referencia[i].nome_publicacao, referencia[i].ano_publicacao);
         }
-        
+        else 
+        {
+            if (referencia[i].ano_publicacao != compara_ano_pub)
+            {
+                contador++;
+            }
+        }
+    }
+
+    if (contador != 0)
+    {
+        printf("\n\tDados inseridos sao Invalidos\n");
     }
 }
 
@@ -391,29 +496,32 @@ int listarTodasPalavrasChaveSemRepetidas(REFERENCIA referencia[], int totalRefer
 
     for (int i = 0; i < totalReferencias; i++)
     {
-        if (total_palavra_chave_sem_ser_repetido == 0)
+        for (int j = 0; j < referencia[i].qtd_palavra_chave; j++)
         {
-            strcpy(palavra_chave_sem_ser_repetido[total_palavra_chave_sem_ser_repetido], referencia[i].autor->nome_proprio);
-            total_palavra_chave_sem_ser_repetido++;
-            continue;
-        }
-
-        for (int j = 0; j < total_palavra_chave_sem_ser_repetido; j++)
-        {
-            if (!strcmp(referencia[i].autor->nome_proprio, palavra_chave_sem_ser_repetido[j]))
+            if (total_palavra_chave_sem_ser_repetido == 0)
             {
-                palavra_chave_ja_repetido = 1;
-                break;
+                strcpy(palavra_chave_sem_ser_repetido[total_palavra_chave_sem_ser_repetido], referencia[j].palavra_chave);
+                total_palavra_chave_sem_ser_repetido++;
+                continue;
             }
-        }
 
-        if (!palavra_chave_ja_repetido)
-        {
-            strcpy(palavra_chave_sem_ser_repetido[total_palavra_chave_sem_ser_repetido], referencia[i].autor->nome_proprio);
-            total_palavra_chave_sem_ser_repetido++;
-        }
+            for (int k = 0; k < total_palavra_chave_sem_ser_repetido; k++)
+            {
+                if (!strcmp(referencia[j].palavra_chave, palavra_chave_sem_ser_repetido[k]))
+                {
+                    palavra_chave_ja_repetido = 1;
+                    break;
+                }
+            }
 
-        palavra_chave_ja_repetido = 0;
+            if (!palavra_chave_ja_repetido)
+            {
+                strcpy(palavra_chave_sem_ser_repetido[total_palavra_chave_sem_ser_repetido], referencia[j].palavra_chave);
+                total_palavra_chave_sem_ser_repetido++;
+            }
+
+            palavra_chave_ja_repetido = 0;
+        }
     }
 
     if (opcao == 1)
@@ -430,11 +538,6 @@ int listarTodasPalavrasChaveSemRepetidas(REFERENCIA referencia[], int totalRefer
 }
 
 // MOSTRAR ALGUMAS ESTATISTICAS
-void totalPublicacoesSemRepetidos() {}
-void totalAutoresSemRepetidos() {}//ja esta feita na funcao de listar autores sem mostrar repetidos
-
-void totalPalavrasChaveSemRepetidos() {}//ja esta feita na funcao de listar plavra-chave sem mostrar repetidos
-
 int totalPaginas(REFERENCIA referencia[], int totalReferencias) {
     int totalPaginas = 0;
 
@@ -471,11 +574,11 @@ void menuListagens(REFERENCIA referencia[], int totalReferencias)
     {
         printf("**********************************Menu De Listas***************************************************\n");
         printf("\n\t 1. Listar Autores sem mostrar repetidos");
-        printf("\n\t 2. Listar todas as publicacoes de um autor, dado o nome completo ou so pelo Apelido");
-        printf("\n\t 3. Listar todas as publicacoes de um certo tipo");
-        printf("\n\t 4. Listar todas as publicacoes que contenham uma ou mais combinacao de palavras-chave");
-        printf("\n\t 5. Listar todas as publicacoes de um certo ano");
-        printf("\n\t 6. Listar todas as palavra-chave sem mostrar repetidas");
+        printf("\n\t 2. Listar todas as publicacoes de um dado Autor");
+        printf("\n\t 3. Listar todas as publicacoes de um certo Tipo");
+        printf("\n\t 4. Listar todas as publicacoes de uma dada Palavras-Chave");
+        printf("\n\t 5. Listar todas as publicacoes de um certo Ano");
+        printf("\n\t 6. Listar todas as Palavra-Chave sem mostrar repetidas");
         printf("\n\t 7. Voltar para o menu Referencias(menu Principal)");
         printf("\n***************************************************************************************************\n");
 
@@ -487,40 +590,60 @@ void menuListagens(REFERENCIA referencia[], int totalReferencias)
         case 1:
             listarAutoresSemRepetidos(referencia, totalReferencias, 1);
             getch(); // espera que seja inserido uma tecla
+            system("cls");
             printf("\n\t Vai voltar para o menu de Listas, ou seja, o menu anterior!!!");
             getch();
+            system("cls");
             break;
         case 2:
+            listarPublicacoesAutor(referencia, totalReferencias);
             getch(); // espera que seja inserido uma tecla
+            system("cls");
+            printf("\n\t Vai voltar para o menu de Listas, ou seja, o menu anterior!!!");
+            getch();
+            system("cls");
             break;
         case 3:
             listarPublicacoesTipo(referencia, totalReferencias);
             getch(); // espera que seja inserido uma tecla
+            system("cls");
             printf("\n\t Vai voltar para o menu de Listas, ou seja, o menu anterior!!!");
             getch();
+            system("cls");
             break;
         case 4:
+            listarPublicacoesPelaPalavraChave(referencia, totalReferencias);
             getch(); // espera que seja inserido uma tecla
+            system("cls");
+            printf("\n\t Vai voltar para o menu de Listas, ou seja, o menu anterior!!!");
+            getch();
+            system("cls");
             break;
         case 5:
             listarPublicacoesAno(referencia, totalReferencias);
             getch(); // espera que seja inserido uma tecla
+            system("cls");
             printf("\n\t Vai voltar para o menu de Listas, ou seja, o menu anterior!!!");
             getch();
+            system("cls");
             break;
         case 6:
             listarTodasPalavrasChaveSemRepetidas(referencia, totalReferencias, 1);
             getch(); // espera que seja inserido uma tecla
+            system("cls");
             printf("\n\t Vai voltar para o menu de Listas, ou seja, o menu anterior!!!");
             getch();
+            system("cls");
             break;
         case 7:
-            system("cls");
+            system( "cls");
             printf("\n\t Vai voltar para o menu Referencias, ou seja, o menu principal!!!");
-            getch(); // espera que seja inserido uma tecla
+            getch();
+            system("cls"); 
             return;
         default:
-            printf("\n\t Opcao invalida!!! Por favor insira uma das opcoes apresentadas!!");
+            system("cls");
+            printf("\n\t Opcao invalida!!! Por favor insira uma das opcoes apresentadas!!\n\n");
             break;
         }
     }
@@ -532,16 +655,15 @@ void menuEstatisticas(REFERENCIA referencia[], int totalReferencias)
     system("cls");
     int escolha;
 
-
     while (1)
     {
         printf("*****************Menu De Estatisticas*****************\n");
-        printf("\n\t 1. Total de Publicacoes sem repetidos.");
-        printf("\n\t 2. Total de autores sem repetidos.");
-        printf("\n\t 3. Total de palavras-chave sem repetidos.");
-        printf("\n\t 4. Total de paginas.");
-        printf("\n\t 5. Media de paginas por publicacao.");
-        printf("\n\t 6. Voltar para o menu Referencias(menu Principal)");
+        printf("\n\t 1. Total de Publicacoes.");
+        printf("\n\t 2. Total de Autores sem repetidos.");
+        printf("\n\t 3. Total de Palavras-Chave sem repetidos.");
+        printf("\n\t 4. Total de Paginas.");
+        printf("\n\t 5. Media de Paginas por publicacao.");
+        printf("\n\t 6. Voltar para o menu Referencias(menu Principal)\n\n");
         printf("******************************************************\n");
 
         printf("Por favor escolha a opção que pretende realizar: ");
@@ -550,40 +672,55 @@ void menuEstatisticas(REFERENCIA referencia[], int totalReferencias)
         switch (escolha)
         {
         case 1:
+            printf("O Total de punlicacaoes e: %i", totalReferencias);
             getch(); // espera que seja inserido uma tecla
+            system("cls");
+            printf("\n\t Vai voltar para o menu de Estatisticas, ou seja, o menu anterior!!!");
+            getch();
+            system("cls");
             break;
         case 2:
             printf("O Total de autores sem ser repetido e: %i", listarAutoresSemRepetidos(referencia, totalReferencias, 0));
             getch(); // espera que seja inserido uma tecla
+            system("cls");
             printf("\n\t Vai voltar para o menu de Estatisticas, ou seja, o menu anterior!!!");
             getch();
+            system("cls");
             break;
         case 3:
             printf("O Total de palavras-chave sem ser repetido e: %i", listarTodasPalavrasChaveSemRepetidas(referencia, totalReferencias, 0));
             getch(); // espera que seja inserido uma tecla
+            system("cls");
             printf("\n\t Vai voltar para o menu de Estatisticas, ou seja, o menu anterior!!!");
             getch();
+            system("cls");
             break;
         case 4:
             printf("Existe um total de paginas de: %i", totalPaginas(referencia, totalReferencias));
             getch(); // espera que seja inserido uma tecla
+            system("cls");
             printf("\n\t Vai voltar para o menu de Estatisticas, ou seja, o menu anterior!!!");
             getch();
+            system("cls");
             break;
         case 5:
             printf("A media de paginas e: %.2f", mediaPaginaPorPublicacao(referencia, totalReferencias));
             getch(); // espera que seja inserido uma tecla
+            system("cls");
             printf("\n\t Vai voltar para o menu de Estatisticas, ou seja, o menu anterior!!!");
             getch();
+            system("cls");
             break;
         case 6:
             system("cls");
             printf("\n\t Vai voltar para o menu Referencias, ou seja, o menu principal!!!");
-            getch(); // espera que seja inserido uma tecla
+            getch();
+            system("cls");
             return;
             break;
         default:
-            printf("\n\t Opcao invalida!!! Por favor insira uma das opcoes apresentadas!!");
+            system("cls");
+            printf("\n\t Opcao invalida!!! Por favor insira uma das opcoes apresentadas!!\n\n");
             break;
         }
     }
@@ -592,10 +729,11 @@ void menuEstatisticas(REFERENCIA referencia[], int totalReferencias)
 // MENU PRINCIPAL, OU SEJA, MENU DAS REFERENCIAS BIBLIOGRAFICAS
 void menuReferencias(REFERENCIA referencia[], int totalReferencias)
 {
-    // system("cls");
+    //getch();
+    system("cls");
     int escolha;
 
-    while (1)//fica dentro do while para sempre 
+    while (1)//fica dentro do while para sempre, ou seja, ciclo infinito
     {
         printf("******Gestao De Referencias Bibliograficas******\n");
         printf("\n\t 1. Insercao");
@@ -618,7 +756,7 @@ void menuReferencias(REFERENCIA referencia[], int totalReferencias)
             system("cls");
             printf("\n\t Vai voltar para o menu Referencias, ou seja, o menu principal!!!");
             getch();
-            menuReferencias(referencia, totalReferencias);
+            system("cls");
             break;
         case 2:
             mostrarReferencias(referencia, totalReferencias);
@@ -626,7 +764,7 @@ void menuReferencias(REFERENCIA referencia[], int totalReferencias)
             system("cls");
             printf("\n\t Vai voltar para o menu Referencias, ou seja, o menu principal!!!");
             getch();
-            menuReferencias(referencia, totalReferencias);
+            system("cls");
             break;
         case 3:
             alterarReferencias(referencia, totalReferencias);
@@ -634,7 +772,7 @@ void menuReferencias(REFERENCIA referencia[], int totalReferencias)
             system("cls");
             printf("\n\t Vai voltar para o menu Referencias, ou seja, o menu principal!!!");
             getch();
-            menuReferencias(referencia, totalReferencias);
+            system("cls");
             break;
         case 4:
             totalReferencias = eliminarReferencias(referencia, totalReferencias);
@@ -642,15 +780,13 @@ void menuReferencias(REFERENCIA referencia[], int totalReferencias)
             system("cls");
             printf("\n\t Vai voltar para o menu Referencias, ou seja, o menu principal!!!");
             getch();
-            menuReferencias(referencia, totalReferencias);
+            system("cls");
             break;
         case 5:
             menuListagens(referencia, totalReferencias);
-            getch(); // espera que seja inserido uma tecla
             break;
         case 6:
             menuEstatisticas(referencia, totalReferencias);
-            getch(); // espera que seja inserido uma tecla
             break;
         case 7:
             system("cls");
@@ -658,7 +794,8 @@ void menuReferencias(REFERENCIA referencia[], int totalReferencias)
             getch(); // espera que seja inserido uma tecla
             return;
         default:
-            printf("\n\t Opcao invalida!!! Por favor insira uma das opcoes apresentadas!!");
+            system("cls");
+            printf("\n\t Opcao invalida!!! Por favor insira uma das opcoes apresentadas!!\n\n");
             break;
         }
     }
@@ -668,7 +805,6 @@ int main(int argc, char *argv[])
 {
 
     setlocale(LC_ALL, "Portuguese");
-    // system("COLOR FC");
 
     // DECLARA??O DE VARI?VEIS E DE CONSTANTES
     REFERENCIA referencia[TAM];
